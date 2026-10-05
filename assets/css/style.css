@@ -930,48 +930,6 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px 
 }
 
 /* ==========================================================================
-   Gallery — drag to explore
-   ========================================================================== */
-
-.gallery { position: relative; z-index: 5; padding: clamp(70px, 10vh, 110px) 0 clamp(110px, 15vh, 160px); }
-.gallery-head { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; }
-.gallery-hint { margin: 0; font: 400 11px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--smoke); }
-.gallery-strip {
-  display: flex; align-items: center; gap: clamp(14px, 2vw, 26px);
-  overflow-x: auto;
-  padding: 26px max(var(--gutter), calc((100vw - var(--maxw)) / 2));
-  scrollbar-width: none;
-  cursor: grab;
-  user-select: none; -webkit-user-select: none;
-}
-.gallery-strip::-webkit-scrollbar { display: none; }
-.gallery-strip.is-dragging { cursor: grabbing; }
-.g-card {
-  --c: 20px;
-  position: relative; flex: none; margin: 0;
-  height: clamp(340px, 58vh, 560px);
-  aspect-ratio: 820 / 1463;
-  overflow: hidden;
-  background: var(--onyx);
-  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
-  transform: perspective(900px) rotateY(var(--skew, 0deg));
-  transition: transform .5s var(--ease);
-}
-.g-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; transition: transform .8s var(--ease), filter .8s; filter: saturate(.9); }
-.g-card:hover img { transform: scale(1.05); filter: saturate(1.05); }
-.g-wide { height: auto; width: min(82vw, 960px); aspect-ratio: 1600 / 534; }
-.g-emblem { aspect-ratio: 1 / 1; height: clamp(260px, 40vh, 400px); background: radial-gradient(circle at 50% 55%, rgba(232, 184, 74, .25), var(--onyx) 70%); }
-.g-emblem img { object-fit: contain; padding: 14%; }
-.g-card figcaption {
-  position: absolute; left: 14px; bottom: 14px;
-  padding: 7px 10px;
-  font: 400 10.5px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase;
-  color: var(--champagne);
-  background: rgba(7, 6, 10, .66);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-}
-
-/* ==========================================================================
    Contact — horizon film
    ========================================================================== */
 

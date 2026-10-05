@@ -601,33 +601,6 @@
   placeGlow(tabs[0]);
 
   /* ------------------------------------------------------------------
-     Gallery: drag with inertia, cards lean into the motion
-     ------------------------------------------------------------------ */
-  var strip = $('#galleryStrip');
-  var gCards = $$('.g-card', strip);
-  var drag = { on: false, x: 0, left: 0, v: 0, lastX: 0, moved: 0 };
-  var stripV = 0;
-  var stripSkew = 0;
-  strip.addEventListener('pointerdown', function (e) {
-    if (e.pointerType !== 'mouse') return;
-    drag.on = true; drag.x = drag.lastX = e.clientX; drag.left = strip.scrollLeft; drag.moved = 0; stripV = 0;
-    strip.classList.add('is-dragging');
-    strip.setPointerCapture(e.pointerId);
-  });
-  strip.addEventListener('pointermove', function (e) {
-    if (!drag.on) return;
-    var dx = e.clientX - drag.x;
-    drag.moved = Math.max(drag.moved, Math.abs(dx));
-    stripV = drag.lastX - e.clientX;
-    drag.lastX = e.clientX;
-    strip.scrollLeft = drag.left - dx;
-  });
-  function endDrag() { drag.on = false; strip.classList.remove('is-dragging'); }
-  strip.addEventListener('pointerup', endDrag);
-  strip.addEventListener('pointercancel', endDrag);
-  var stripLastLeft = strip.scrollLeft;
-
-  /* ------------------------------------------------------------------
      Office hours (Eastern Time) with live open/closed status
      ------------------------------------------------------------------ */
   var HOURS = { 0: null, 1: [9, 17], 2: [9, 21], 3: [9, 17], 4: [9, 17], 5: [9, 17], 6: [10, 13] };
@@ -787,7 +760,6 @@
     var cardR = pinRail && inServices ? svcCards.map(rectOf) : null;
     var railLeft = 0, railMax = 0;
     if (!pinRail) { railLeft = railEl.scrollLeft; railMax = railEl.scrollWidth - railEl.clientWidth; }
-    var stripLeft = strip.scrollLeft;
 
     /* ---- write phase ---- */
 
@@ -900,20 +872,6 @@
         eiNodes.forEach(function (c, i) { c.classList.toggle('is-on', i <= act); });
         expectIdx.textContent = promises[act].querySelector('h3').textContent;
       }
-    }
-
-    // Gallery: inertia after a drag, cards lean into the motion
-    var sv = stripLeft - stripLastLeft;
-    stripLastLeft = stripLeft;
-    if (!drag.on && Math.abs(stripV) > 0.2) {
-      strip.scrollLeft = stripLeft + stripV;
-      stripV *= 0.94;
-    }
-    var nextSkew = lerp(stripSkew, clamp(sv * -0.5, -14, 14), 0.15);
-    if (Math.abs(nextSkew) < 0.02) nextSkew = 0;
-    if (nextSkew !== stripSkew) {
-      stripSkew = nextSkew;
-      gCards.forEach(function (c) { c.style.setProperty('--skew', stripSkew.toFixed(2) + 'deg'); });
     }
 
     // Contact horizon film

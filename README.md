@@ -31,7 +31,6 @@ All paths are relative, so the site works from a sub-folder URL or from the root
 | Planning lab | Two live tools: a DIME life-insurance estimate and a monthly money snapshot. Nothing entered leaves the page. |
 | Mission | Words rise into place over a parallax gold-ribbon backdrop. |
 | What you can expect | A comet travels the infinity symbol and lights each promise as you reach it. |
-| Gallery | Drag (desktop) or swipe (phone) with momentum. |
 | Contact | A second film (golden horizon) plays as you arrive. Click-to-call numbers, live **Open now / Closed** status in Eastern Time, and a request form. |
 
 Throughout: an **infinity-shaped progress meter** in the top bar fills as you move down the page, a gold cursor ring, magnetic buttons, and drifting gold dust that moves away from the cursor.
