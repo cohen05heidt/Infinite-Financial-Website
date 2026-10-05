@@ -10,14 +10,15 @@ Double-click **`START-PREVIEW.bat`**. It starts a small local server (Windows Po
 
 You can also open `index.html` directly. Most things work, but some browsers block parts of a page opened from disk, so the preview server is the reliable way to check it.
 
-## Publish on GitHub Pages
+## Client preview link
 
-1. Push this repository to GitHub (already set up as `cohen05heidt/Infinite-Financial-Website`).
-2. On GitHub, go to **Settings → Pages**.
-3. Under *Build and deployment*, choose **Deploy from a branch**, pick **main** and **/ (root)**, then **Save**.
-4. After a minute the site is live at `https://cohen05heidt.github.io/Infinite-Financial-Website/`. A custom domain such as `infinite-financial-group.com` can be added on the same page.
+**https://cohen05heidt.github.io/Infinite-Financial-Website/**
 
-All paths are relative, so the site works from a sub-folder URL or from the root of a domain.
+A preview of the work in progress, hosted free by GitHub Pages from the `main` branch. It is not the real website: it isn't on the business's domain, it carries a `noindex` tag so search engines skip it, and it updates a minute or two after each push. Anyone with the link can open it.
+
+To switch it off: repo **Settings → Pages →** set the branch to **None** → **Save**.
+
+The final site goes on Hostinger at the business's own domain. Upload `index.html` and the `assets` folder to the site root, and see *Before launch* below. All paths are relative, so the site also works from a sub-folder.
 
 ## What's on the page
 
@@ -67,6 +68,9 @@ The films are stored as numbered still frames rather than video on purpose. Scru
 All illustrations, backgrounds and both films were generated with **Higgsfield** (GPT Image 2.5 stills; Kling 3.0 Pro image-to-video, cut into frames with ffmpeg). Photos of Kareem M. Farley and the IFG logos are the client's own. Two supplied photos showing Louis Vuitton branding were intentionally left out, and no third-party logos appear anywhere on the site.
 
 ## Before launch
+
+- **Remove the preview-only `noindex` line** near the top of `index.html` (marked `PREVIEW ONLY`), or search engines will ignore the real site too.
+- **Turn off the GitHub preview** once the Hostinger site is live: repo **Settings → Pages →** set the branch to **None** → Save.
 
 - Insurance and financial-services marketing, including bios, service descriptions and the Planning Lab tools, may need review by the carrier or IMO the agency is appointed with. Worth starting early.
 - The Planning Lab is labeled as educational estimates, not quotes or recommendations. Keep that wording if the tools change.
