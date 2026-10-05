@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Infinite Financial Group | Financial Protection, Wealth Creation &amp; Legacy Planning</title>
+  <meta name="description" content="Veteran-owned, faith-based financial services agency in Covington, Georgia. Life insurance, financial coaching, retirement education and legacy conversations, led by Kareem M. Farley. Call 706-496-5292.">
+  <meta name="theme-color" content="#07060A">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Infinite Financial Group">
+  <meta property="og:description" content="Financial Protection • Wealth Creation • Legacy Planning. Protect what matters, understand your money, and plan with purpose.">
+  <meta property="og:image" content="assets/img/og-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath d='M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z' fill='none' stroke='%23E8B84A' stroke-width='14'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero-poster.jpg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "Infinite Financial Group",
+    "slogan": "Financial Protection • Wealth Creation • Legacy Planning",
+    "founder": { "@type": "Person", "name": "Kareem M. Farley" },
+    "telephone": ["+1-706-496-5292", "+1-404-272-8733"],
+    "email": "farleyphp@gmail.com",
+    "address": { "@type": "PostalAddress", "streetAddress": "10205 Industrial Blvd NE", "addressLocality": "Covington", "addressRegion": "GA", "postalCode": "30014", "addressCountry": "US" },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "17:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "09:00", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "13:00" }
+    ]
+  }
+  </script>
+</head>
+<body class="is-loading">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Preloader: the infinity draws itself while the opening film loads -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="loader-inf" viewBox="-4 -4 208 108">
+      <path class="loader-track" d="M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z"/>
+      <path class="loader-draw" id="loaderDraw" d="M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z"/>
+    </svg>
+    <p class="loader-word">Infinite Financial Group</p>
+    <p class="loader-pct"><span id="loaderPct">0</span>%</p>
+  </div>
+
+  <div class="cursor" aria-hidden="true"><span class="cursor-ring"></span><span class="cursor-dot"></span><span class="cursor-label"></span></div>
+  <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Infinite Financial Group, back to top">
+      <img src="assets/img/ifg-monogram.png" alt="" width="84" height="60">
+      <span class="brand-word">Infinite<br><em>Financial Group</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">Who we are</a>
+      <a href="#services">How we help</a>
+      <a href="#lab">Planning lab</a>
+      <a href="#mission">Mission</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <svg class="inf-meter" viewBox="-6 -6 212 112" aria-hidden="true">
+        <path class="inf-meter-track" d="M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z"/>
+        <path class="inf-meter-fill" id="infMeter" d="M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z"/>
+      </svg>
+      <a class="btn btn-gold btn-sm nav-call" href="tel:+17064965292" data-magnetic><span>706-496-5292</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span class="sr-only">Menu</span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <nav aria-label="Mobile">
+      <a href="#about">Who we are</a>
+      <a href="#services">How we help</a>
+      <a href="#lab">Planning lab</a>
+      <a href="#mission">Mission</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-gold" href="tel:+17064965292"><span>Call 706-496-5292</span></a>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ HERO: the scroll plays the film ============ -->
+    <section class="hero" id="top" data-film="hero" data-frames="144" aria-label="Introduction">
+      <div class="hero-stage">
+        <img class="film-poster" src="assets/img/hero-poster.jpg" srcset="assets/img/hero-poster-sm.jpg 960w, assets/img/hero-poster.jpg 1920w" sizes="100vw" alt="" aria-hidden="true">
+        <canvas class="film-canvas" aria-hidden="true"></canvas>
+        <div class="film-vignette"></div>
+
+        <div class="hud hud-tl" aria-hidden="true">
+          <span>N 33.5968°&nbsp;&nbsp;W 83.8602°</span>
+          <span>Covington, Georgia</span>
+        </div>
+        <ol class="hud-rail" aria-hidden="true">
+          <li data-chapter="1">Protection</li>
+          <li data-chapter="2">Wealth</li>
+          <li data-chapter="3">Legacy</li>
+          <span class="hud-rail-fill"></span>
+        </ol>
+        <div class="hud hud-bl" aria-hidden="true"><span class="hud-frame">Frame <b id="frameNo">001</b> / <i id="frameTotal">144</i></span></div>
+        <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+
+        <div class="chapters">
+          <div class="chapter chapter--intro" data-in="0" data-out="0.2">
+            <p class="eyebrow">Veteran-owned · Faith-based</p>
+            <h1 class="hero-title"><span class="ht-a gold-text">Infinite</span><span class="ht-b">Financial Group</span></h1>
+            <p class="hero-pillars">Financial Protection <i>✦</i> Wealth Creation <i>✦</i> Legacy Planning</p>
+            <p class="hero-sub">Helping you protect what matters, understand your money, and plan with purpose.</p>
+            <div class="hero-ctas">
+              <a class="btn btn-gold" href="#contact" data-magnetic><span>Start a conversation</span></a>
+              <a class="btn btn-ghost" href="tel:+17064965292" data-magnetic><span>Call 706-496-5292</span></a>
+            </div>
+          </div>
+          <div class="chapter" data-in="0.25" data-out="0.47" data-chapter-id="1">
+            <p class="eyebrow">01 · Financial Protection</p>
+            <p class="chapter-line">Protect what <em>matters.</em></p>
+            <p class="chapter-copy">Life insurance and family protection, explored around your needs, priorities, and budget.</p>
+          </div>
+          <div class="chapter" data-in="0.5" data-out="0.72" data-chapter-id="2">
+            <p class="eyebrow">02 · Wealth Creation</p>
+            <p class="chapter-line">Understand your <em>money.</em></p>
+            <p class="chapter-copy">Coaching on budgeting, debt, savings goals, and the habits that move you forward.</p>
+          </div>
+          <div class="chapter" data-in="0.76" data-out="1.01" data-chapter-id="3">
+            <p class="eyebrow">03 · Legacy Planning</p>
+            <p class="chapter-line">Build your <em>legacy.</em></p>
+            <p class="chapter-copy">Protect what matters. Plan with purpose. Pass on more than money.</p>
+            <div class="hero-ctas">
+              <a class="btn btn-gold" href="#contact" data-magnetic><span>Start a conversation</span></a>
+              <a class="btn btn-ghost" href="#services" data-magnetic><span>See how we help</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ticker: speed and lean follow your scroll -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker">
+        <span>Financial Protection</span><i>∞</i><span>Wealth Creation</span><i>∞</i><span>Legacy Planning</span><i>∞</i><span>Veteran-Owned</span><i>∞</i><span>Faith-Based</span><i>∞</i><span>Education First</span><i>∞</i>
+      </div>
+    </div>
+
+    <!-- ============ APPROACH ============ -->
+    <section class="intro" id="approach">
+      <div class="wrap">
+        <p class="kicker" data-reveal>Our approach</p>
+        <p class="lit-text" data-lit>At Infinite Financial Group, we believe financial confidence begins with understanding your options.</p>
+        <div class="intro-cols">
+          <p data-reveal>We help individuals, families, and business owners have meaningful conversations about their finances and take practical steps toward their goals.</p>
+          <p data-reveal style="--d:120ms">Whether you want to protect your family with life insurance, organize your budget, address debt, or explore retirement options, we start by listening. Your priorities, responsibilities, and vision for the future guide the conversation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHO WE ARE ============ -->
+    <section class="about" id="about">
+      <div class="wrap about-grid">
+        <figure class="about-media" data-reveal>
+          <div class="holo" data-tilt data-cursor="Kareem">
+            <div class="holo-frame">
+              <img src="assets/img/kareem-portrait.jpg" alt="Kareem M. Farley, founder of Infinite Financial Group, in a black suit and gold tie" width="900" height="1327" loading="lazy">
+              <span class="holo-sheen"></span>
+              <span class="holo-scan"></span>
+            </div>
+            <span class="bracket b-tl"></span><span class="bracket b-tr"></span><span class="bracket b-bl"></span><span class="bracket b-br"></span>
+          </div>
+          <figcaption class="holo-tag"><b>Kareem M. Farley</b><span>Founder · Infinite Financial Group</span></figcaption>
+        </figure>
+
+        <div class="about-copy">
+          <p class="kicker" data-reveal>Who we are</p>
+          <h2 class="h2" data-reveal>Veteran-owned. Faith-based. <em>Built to serve.</em></h2>
+          <p data-reveal>Infinite Financial Group is a veteran-owned, faith-based financial services agency founded and led by Kareem M. Farley. Our approach reflects a commitment to service, integrity, education, and responsible stewardship.</p>
+          <p data-reveal>Kareem brings his experience as a U.S. Army veteran, pastor, law enforcement professional, and business owner to his work with families. His commitment to serving others shapes our belief that people deserve clear explanations, respectful conversations, and support as they make important financial decisions.</p>
+
+          <ul class="record" aria-label="Kareem's background">
+            <li data-reveal style="--d:0ms">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.6 6.3 6.8.5-5.2 4.4 1.7 6.6L12 16.2 6.1 19.8l1.7-6.6L2.6 8.8l6.8-.5z"/></svg>
+              <b>U.S. Army veteran</b><span>Service</span>
+            </li>
+            <li data-reveal style="--d:80ms">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 2h2v5h5v2h-5v13h-2V9H6V7h5z"/></svg>
+              <b>Pastor</b><span>Stewardship</span>
+            </li>
+            <li data-reveal style="--d:160ms">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z"/></svg>
+              <b>Law enforcement professional</b><span>Integrity</span>
+            </li>
+            <li data-reveal style="--d:240ms">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12h-6v-6h-4v6z"/></svg>
+              <b>Business owner</b><span>Practical experience</span>
+            </li>
+          </ul>
+          <p class="welcome" data-reveal>We welcome people from all backgrounds and at every stage of their financial journey.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW WE HELP: pinned horizontal rail ============ -->
+    <section class="services" id="services">
+      <div class="services-stage">
+        <div class="services-head wrap">
+          <div>
+            <p class="kicker">How we help</p>
+            <h2 class="h2">Four conversations. <em>One plan.</em></h2>
+          </div>
+          <div class="rail-meta" aria-hidden="true">
+            <span class="rail-count"><b id="railNow">1</b> / 4</span>
+            <span class="rail-bar"><i id="railBar"></i></span>
+          </div>
+        </div>
+        <div class="rail" id="rail">
+          <div class="rail-track" id="railTrack">
+
+            <article class="svc frame" data-tilt="soft">
+              <div class="frame-in svc-in">
+                <div class="svc-media"><img src="assets/img/svc-protection.jpg" alt="A golden shield of light arching over a family" loading="lazy" width="960" height="1200"></div>
+                <div class="svc-body">
+                  <p class="svc-pillar">Financial Protection</p>
+                  <h3>Life insurance &amp; family protection</h3>
+                  <p>We help clients explore life insurance options based on their needs, priorities, and budgets.</p>
+                  <ul class="chips"><li>Term life</li><li>Permanent life</li><li>Final expense</li><li>Mortgage protection</li></ul>
+                  <p class="svc-note">We also help you understand your existing coverage and review beneficiary designations so you can make more informed decisions.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="svc frame" data-tilt="soft">
+              <div class="frame-in svc-in">
+                <div class="svc-media"><img src="assets/img/svc-coaching.jpg" alt="A holographic golden budget dashboard above a black desk" loading="lazy" width="960" height="1200"></div>
+                <div class="svc-body">
+                  <p class="svc-pillar">Wealth Creation</p>
+                  <h3>Financial coaching &amp; education</h3>
+                  <p>Coaching that helps you understand where your money goes and build a practical plan for moving forward.</p>
+                  <ul class="chips"><li>Budgeting</li><li>Spending awareness</li><li>Debt organization</li><li>Savings goals</li><li>Financial habits</li></ul>
+                  <p class="svc-note">Through education and accountability, we help turn broad goals into manageable action steps.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="svc frame" data-tilt="soft">
+              <div class="frame-in svc-in">
+                <div class="svc-media"><img src="assets/img/svc-retirement.jpg" alt="A gold hourglass releasing sparks toward a sunrise" loading="lazy" width="960" height="1200"></div>
+                <div class="svc-body">
+                  <p class="svc-pillar">Wealth Creation</p>
+                  <h3>Retirement education &amp; insurance solutions</h3>
+                  <p>We help you discuss retirement goals, explore annuity options, and better understand retirement income and existing retirement accounts.</p>
+                  <ul class="chips"><li>Retirement goals</li><li>Annuities</li><li>Retirement income</li><li>Rollover questions</li></ul>
+                  <p class="svc-note">We explain options clearly, including relevant costs, limitations, and tradeoffs. When a need falls outside our services, we encourage you to work with the appropriately qualified professional.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="svc frame" data-tilt="soft">
+              <div class="frame-in svc-in">
+                <div class="svc-media"><img src="assets/img/svc-legacy.jpg" alt="A tree of golden light with roots spreading like circuitry" loading="lazy" width="960" height="1200"></div>
+                <div class="svc-body">
+                  <p class="svc-pillar">Legacy Planning</p>
+                  <h3>Legacy conversations</h3>
+                  <p>Legacy includes the values, knowledge, and resources you pass to the next generation. We help families begin those conversations.</p>
+                  <ul class="chips"><li>Financial protection</li><li>Beneficiaries</li><li>Long-term goals</li><li>Financial education</li></ul>
+                  <p class="svc-note">Legal estate planning documents and tax matters should be addressed with qualified attorneys and tax professionals.</p>
+                </div>
+              </div>
+            </article>
+
+            <aside class="svc-end">
+              <p class="svc-end-line">Not sure which conversation is yours?</p>
+              <p>That is what the first one is for. We start by listening.</p>
+              <a class="btn btn-gold" href="#contact" data-magnetic><span>Start a conversation</span></a>
+            </aside>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PLANNING LAB ============ -->
+    <section class="lab" id="lab">
+      <div class="lab-bg" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="lab-head">
+          <p class="kicker" data-reveal>Planning lab</p>
+          <h2 class="h2" data-reveal>Try the numbers. <em>Then talk them through.</em></h2>
+          <p class="lab-lede" data-reveal>Two quick tools to start thinking. Everything stays on this page; nothing you enter is sent anywhere.</p>
+        </div>
+
+        <div class="lab-tabs" role="tablist" aria-label="Planning tools" data-reveal>
+          <button role="tab" id="tab-dime" aria-controls="panel-dime" aria-selected="true">Protection estimate</button>
+          <button role="tab" id="tab-budget" aria-controls="panel-budget" aria-selected="false" tabindex="-1">Monthly money snapshot</button>
+          <span class="lab-tab-glow" aria-hidden="true"></span>
+        </div>
+
+        <!-- DIME estimate -->
+        <div class="lab-panel frame" role="tabpanel" id="panel-dime" aria-labelledby="tab-dime" data-reveal>
+          <div class="frame-in lab-grid">
+            <form class="lab-inputs" id="dimeForm" onsubmit="return false">
+              <p class="lab-hint">The DIME method adds up <b>D</b>ebt, <b>I</b>ncome, <b>M</b>ortgage and <b>E</b>ducation to start a coverage conversation.</p>
+              <div class="field" data-key="debt">
+                <label for="d-debt">Debts, not counting the mortgage</label>
+                <output id="o-debt"></output>
+                <input type="range" id="d-debt" min="0" max="250000" step="1000" value="15000">
+              </div>
+              <div class="field" data-key="income">
+                <label for="d-income">Annual income to replace</label>
+                <output id="o-income"></output>
+                <input type="range" id="d-income" min="0" max="300000" step="1000" value="60000">
+              </div>
+              <div class="field" data-key="years">
+                <label for="d-years">Years your family would need it</label>
+                <output id="o-years"></output>
+                <input type="range" id="d-years" min="0" max="30" step="1" value="10">
+              </div>
+              <div class="field" data-key="mortgage">
+                <label for="d-mortgage">Mortgage balance</label>
+                <output id="o-mortgage"></output>
+                <input type="range" id="d-mortgage" min="0" max="1000000" step="5000" value="180000">
+              </div>
+              <div class="field" data-key="education">
+                <label for="d-education">Future education costs</label>
+                <output id="o-education"></output>
+                <input type="range" id="d-education" min="0" max="500000" step="5000" value="50000">
+              </div>
+              <div class="field" data-key="existing">
+                <label for="d-existing">Coverage you already have</label>
+                <output id="o-existing"></output>
+                <input type="range" id="d-existing" min="0" max="2000000" step="10000" value="100000">
+              </div>
+            </form>
+            <div class="lab-result" aria-live="polite">
+              <p class="lab-result-label">Estimated coverage gap</p>
+              <p class="lab-big gold-text" id="dimeGap">$0</p>
+              <p class="lab-small">of <span id="dimeNeed">$0</span> total need, after <span id="dimeHave">$0</span> existing coverage</p>
+              <div class="stack" id="dimeStack" aria-hidden="true">
+                <i data-part="debt"></i><i data-part="income"></i><i data-part="mortgage"></i><i data-part="education"></i>
+              </div>
+              <ul class="stack-key">
+                <li><i class="k1"></i>Debt <span id="k-debt"></span></li>
+                <li><i class="k2"></i>Income <span id="k-income"></span></li>
+                <li><i class="k3"></i>Mortgage <span id="k-mortgage"></span></li>
+                <li><i class="k4"></i>Education <span id="k-education"></span></li>
+              </ul>
+              <p class="lab-fine">A simplified rule of thumb for starting a conversation. It is not a quote or a recommendation; your actual needs depend on your full situation.</p>
+              <a class="btn btn-gold" href="#contact" data-magnetic><span>Talk through these numbers</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Budget snapshot -->
+        <div class="lab-panel frame" role="tabpanel" id="panel-budget" aria-labelledby="tab-budget" hidden>
+          <div class="frame-in lab-grid">
+            <form class="lab-inputs" id="budgetForm" onsubmit="return false">
+              <p class="lab-hint">Rough monthly numbers are fine. The point is to see where the money goes.</p>
+              <div class="field" data-key="takehome">
+                <label for="b-takehome">Monthly take-home pay</label>
+                <output id="o-takehome"></output>
+                <input type="range" id="b-takehome" min="0" max="20000" step="50" value="4500">
+              </div>
+              <div class="field" data-key="needs">
+                <label for="b-needs">Essentials: housing, utilities, food, transport</label>
+                <output id="o-needs"></output>
+                <input type="range" id="b-needs" min="0" max="15000" step="50" value="2600">
+              </div>
+              <div class="field" data-key="debtpay">
+                <label for="b-debtpay">Debt payments</label>
+                <output id="o-debtpay"></output>
+                <input type="range" id="b-debtpay" min="0" max="8000" step="25" value="450">
+              </div>
+              <div class="field" data-key="wants">
+                <label for="b-wants">Lifestyle and everything else</label>
+                <output id="o-wants"></output>
+                <input type="range" id="b-wants" min="0" max="10000" step="25" value="900">
+              </div>
+            </form>
+            <div class="lab-result" aria-live="polite">
+              <div class="ring-wrap">
+                <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="ringGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE6A6"/><stop offset=".5" stop-color="#E8B84A"/><stop offset="1" stop-color="#8A5A1C"/></linearGradient>
+                  </defs>
+                  <circle class="ring-track" cx="60" cy="60" r="50"/>
+                  <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50"/>
+                </svg>
+                <div class="ring-center"><b id="saveRate">0%</b><span>saved</span></div>
+              </div>
+              <p class="lab-result-label">Left over each month</p>
+              <p class="lab-big gold-text" id="leftOver">$0</p>
+              <div class="split" aria-hidden="true">
+                <div><span>Essentials</span><i><b id="bar-needs"></b></i><em id="pct-needs">0%</em></div>
+                <div><span>Debt</span><i><b id="bar-debt"></b></i><em id="pct-debt">0%</em></div>
+                <div><span>Lifestyle</span><i><b id="bar-wants"></b></i><em id="pct-wants">0%</em></div>
+                <div><span>Saving</span><i><b id="bar-save"></b></i><em id="pct-save">0%</em></div>
+              </div>
+              <p class="lab-msg" id="budgetMsg"></p>
+              <a class="btn btn-gold" href="#contact" data-magnetic><span>Ask about financial coaching</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MISSION ============ -->
+    <section class="mission" id="mission">
+      <div class="mission-bg" aria-hidden="true"><img src="assets/img/mission-ribbons.jpg" alt="" loading="lazy"></div>
+      <div class="wrap mission-inner">
+        <p class="kicker" data-reveal>Our mission</p>
+        <blockquote class="mission-quote" data-words>To equip individuals and families with financial education, practical guidance, and insurance solutions that support <em>protection,</em> <em>preparation,</em> and a <em>lasting legacy.</em></blockquote>
+      </div>
+    </section>
+
+    <!-- ============ WHAT YOU CAN EXPECT: a comet travels the infinity ============ -->
+    <section class="expect" id="expect">
+      <div class="wrap expect-grid">
+        <div class="expect-stage">
+          <p class="kicker">What you can expect</p>
+          <h2 class="h2">Five promises. <em>Every conversation.</em></h2>
+          <svg class="expect-inf" id="expectInf" viewBox="-12 -12 224 124" aria-hidden="true">
+            <defs>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="infGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8A5A1C"/><stop offset=".5" stop-color="#FFE6A6"/><stop offset="1" stop-color="#8A5A1C"/></linearGradient>
+            </defs>
+            <path class="ei-track" id="eiPath" d="M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z"/>
+            <path class="ei-trail" id="eiTrail" d="M100,50 C120,20 160,10 180,30 C200,50 190,80 165,85 C140,90 120,70 100,50 C80,30 60,10 35,15 C10,20 0,50 20,70 C40,90 80,80 100,50Z" filter="url(#glow)"/>
+            <g id="eiNodes"></g>
+            <circle class="ei-comet" id="eiComet" r="3.6" cx="100" cy="50" filter="url(#glow)"/>
+          </svg>
+          <p class="expect-now" aria-hidden="true"><span id="expectIdx">Education first</span></p>
+        </div>
+        <ul class="expect-list" id="expectList">
+          <li class="promise"><h3>Education first</h3><p>Clear explanations that help you understand your options.</p></li>
+          <li class="promise"><h3>A personal approach</h3><p>Conversations built around your goals and circumstances.</p></li>
+          <li class="promise"><h3>Respect and integrity</h3><p>Space to ask questions without judgment.</p></li>
+          <li class="promise"><h3>Practical next steps</h3><p>A clearer understanding of what you can work on next.</p></li>
+          <li class="promise"><h3>A commitment to service</h3><p>A team that values your family and your future.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ AROUND IFG: drag-to-explore gallery ============ -->
+    <section class="gallery" id="gallery" aria-label="Photos of Kareem M. Farley">
+      <div class="wrap gallery-head">
+        <p class="kicker" data-reveal>Around Infinite Financial Group</p>
+        <p class="gallery-hint" data-reveal>Drag or swipe to explore</p>
+      </div>
+      <div class="gallery-strip" id="galleryStrip" data-cursor="Drag" tabindex="0" aria-label="Photo gallery, scrollable">
+        <figure class="g-card"><img src="assets/img/kareem-office.jpg" alt="Kareem M. Farley in a green suit in the Infinite Financial Group office" loading="lazy" draggable="false"><figcaption>At the office</figcaption></figure>
+        <figure class="g-card g-wide"><img src="assets/img/ifg-banner.jpg" alt="Infinite Financial Group banner: Protect today. Build tomorrow. Leave a legacy." loading="lazy" draggable="false"></figure>
+        <figure class="g-card"><img src="assets/img/kareem-covington.jpg" alt="Kareem M. Farley standing on a historic town square" loading="lazy" draggable="false"><figcaption>On the square</figcaption></figure>
+        <figure class="g-card"><img src="assets/img/kareem-window.jpg" alt="Kareem M. Farley smiling by an office window" loading="lazy" draggable="false"><figcaption>Ready when you are</figcaption></figure>
+        <figure class="g-card g-emblem"><img src="assets/img/ifg-arrows.png" alt="The Infinite Financial Group arrow emblem" loading="lazy" draggable="false"><figcaption>Protection · Wealth · Legacy</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT: the horizon film plays as you arrive ============ -->
+    <section class="contact" id="contact" data-film="horizon" data-frames="72">
+      <div class="contact-bg" aria-hidden="true">
+        <img class="film-poster" src="assets/img/horizon-poster.jpg" alt="" loading="lazy">
+        <canvas class="film-canvas"></canvas>
+        <div class="contact-shade"></div>
+      </div>
+      <div class="wrap contact-grid">
+        <div class="contact-copy">
+          <p class="kicker" data-reveal>Start with a conversation</p>
+          <h2 class="h2 contact-title" data-reveal>You don't need every answer <em>to take the first step.</em></h2>
+          <p data-reveal>Connect with Infinite Financial Group to discuss your protection needs, learn about financial coaching, or begin a conversation about your future.</p>
+
+          <div class="phones" data-reveal>
+            <a class="phone" href="tel:+17064965292" data-magnetic>
+              <span class="phone-label">Main line</span>
+              <span class="phone-num">706-496-5292</span>
+            </a>
+            <a class="phone" href="tel:+14042728733" data-magnetic>
+              <span class="phone-label">Second line</span>
+              <span class="phone-num">404-272-8733</span>
+            </a>
+          </div>
+
+          <dl class="details" data-reveal>
+            <div><dt>Email</dt><dd><a href="mailto:farleyphp@gmail.com">farleyphp@gmail.com</a></dd></div>
+            <div><dt>Office</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=10205+Industrial+Blvd+NE+Covington+GA+30014" target="_blank" rel="noopener">10205 Industrial Blvd NE<br>Covington, GA 30014</a></dd></div>
+          </dl>
+
+          <div class="hours" data-reveal>
+            <p class="status" id="openStatus"><i></i><span>Checking hours…</span></p>
+            <table>
+              <caption class="sr-only">Office hours, Eastern Time</caption>
+              <tbody id="hoursBody">
+                <tr data-days="1"><th scope="row">Monday</th><td>9 AM – 5 PM</td></tr>
+                <tr data-days="2"><th scope="row">Tuesday</th><td>9 AM – 9 PM</td></tr>
+                <tr data-days="3"><th scope="row">Wednesday</th><td>9 AM – 5 PM</td></tr>
+                <tr data-days="4"><th scope="row">Thursday</th><td>9 AM – 5 PM</td></tr>
+                <tr data-days="5"><th scope="row">Friday</th><td>9 AM – 5 PM</td></tr>
+                <tr data-days="6"><th scope="row">Saturday</th><td>10 AM – 1 PM</td></tr>
+                <tr data-days="0"><th scope="row">Sunday</th><td>Closed</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <form class="request frame" id="requestForm" novalidate data-reveal>
+          <div class="frame-in request-in">
+            <p class="request-title">Request a conversation</p>
+            <p class="request-sub">Pick what you would like to talk about. We will reach out to set a time.</p>
+            <fieldset class="topics">
+              <legend class="sr-only">Topics</legend>
+              <label><input type="checkbox" name="topic" value="Life insurance"><span>Life insurance</span></label>
+              <label><input type="checkbox" name="topic" value="Financial coaching"><span>Financial coaching</span></label>
+              <label><input type="checkbox" name="topic" value="Retirement"><span>Retirement</span></label>
+              <label><input type="checkbox" name="topic" value="Legacy"><span>Legacy</span></label>
+              <label><input type="checkbox" name="topic" value="Not sure yet"><span>Not sure yet</span></label>
+            </fieldset>
+            <div class="inputs">
+              <label class="in"><span>Your name</span><input name="name" autocomplete="name" required></label>
+              <label class="in"><span>Phone</span><input name="phone" type="tel" autocomplete="tel"></label>
+              <label class="in"><span>Email</span><input name="email" type="email" autocomplete="email"></label>
+              <label class="in"><span>Best time to reach you</span>
+                <select name="time"><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select>
+              </label>
+              <label class="in in-wide"><span>Anything you would like us to know</span><textarea name="message" rows="3"></textarea></label>
+            </div>
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <button class="btn btn-gold btn-block" type="submit" data-magnetic><span>Send request by email</span></button>
+            <p class="form-note" id="formNote">This opens your email app with the request filled in, ready to send. Prefer to talk? Call <a href="tel:+17064965292">706-496-5292</a>.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <img class="footer-emblem" src="assets/img/ifg-arrows.png" alt="Infinite Financial Group emblem" width="600" height="545" loading="lazy">
+        <p class="footer-motto">Protect what matters. <em>Plan with purpose.</em> Build your legacy.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <p class="f-head">Infinite Financial Group</p>
+          <p>Financial Protection · Wealth Creation · Legacy Planning</p>
+          <p>Veteran-owned · Faith-based</p>
+        </div>
+        <div>
+          <p class="f-head">Visit</p>
+          <p>10205 Industrial Blvd NE<br>Covington, GA 30014</p>
+        </div>
+        <div>
+          <p class="f-head">Call</p>
+          <p><a href="tel:+17064965292">706-496-5292</a><br><a href="tel:+14042728733">404-272-8733</a></p>
+          <p><a href="mailto:farleyphp@gmail.com">farleyphp@gmail.com</a></p>
+        </div>
+        <div>
+          <p class="f-head">Explore</p>
+          <p><a href="#about">Who we are</a><br><a href="#services">How we help</a><br><a href="#lab">Planning lab</a><br><a href="#contact">Contact</a></p>
+        </div>
+      </div>
+      <p class="disclaimer">Infinite Financial Group provides financial education, coaching, and insurance solutions. Information on this website is for general educational purposes and is not legal, tax, or investment advice. Legal estate planning documents and tax matters should be addressed with qualified attorneys and tax professionals. Planning Lab results are simplified estimates, not quotes or recommendations.</p>
+      <p class="copyright">© <span id="year">2026</span> Infinite Financial Group. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

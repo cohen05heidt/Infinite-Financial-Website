@@ -1,0 +1,8 @@
+# Full-resolution generation sources (Higgsfield PNGs, original MP4s, frame zip) - kept locally, not shipped
+_src/
+
+# Local tooling
+.claude/
+*.zip
+Thumbs.db
+.DS_Store
