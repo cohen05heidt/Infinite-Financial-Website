@@ -55,12 +55,12 @@ index.html               the page
 assets/css/style.css     all styling
 assets/js/main.js        all interaction (vanilla JS)
 assets/img/              photos, Higgsfield graphics, logos, social share card
-assets/film/hero/        opening film: 144 frames, desktop + mobile crops
+assets/film/hero/        opening film: 180 full-HD WebP frames, desktop + mobile crops
 assets/film/horizon/     contact film: 72 frames, desktop + mobile crops
 preview-server.ps1       local preview server used by START-PREVIEW.bat
 ```
 
-The films are stored as numbered JPEG frames rather than video on purpose. Scrubbing still frames on a canvas is smooth in every browser, including iPhone Safari, where seeking a video by scroll position stutters. Please don't re-encode or rename them.
+The films are stored as numbered still frames rather than video on purpose. Scrubbing stills on a canvas is smooth in every browser, including iPhone Safari, where seeking a video by scroll position stutters. The player cross-fades between neighbouring frames so the motion glides instead of stepping, and decodes only the frames around the scroll position in the background, so memory stays modest. Please don't re-encode or rename them.
 
 ## Graphics
 

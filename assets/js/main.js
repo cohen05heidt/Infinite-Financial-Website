@@ -27,20 +27,35 @@
 
   /* ------------------------------------------------------------------
      Film: a frame sequence drawn to canvas, scrubbed by scroll.
-     Frames load in passes (every 16th, 8th, 4th, 2nd, then all), so the
-     whole film is scrubbable early and sharpens as the rest arrive.
+     - Frames download in passes (every 12th, 6th, 3rd, then all) so the
+       whole film is scrubbable early; once that first pass is in, the
+       frames nearest the scroll position jump the queue.
+     - Downloads stay compressed. Only a sliding window of frames around
+       the playhead is decoded (off the main thread, as ImageBitmaps), so
+       drawing never stalls and memory stays bounded.
+     - Neighbouring frames are cross-faded by the fractional position, so
+       the picture glides between frames instead of stepping.
+     - Opened straight from disk (file://) it falls back to plain images.
      ------------------------------------------------------------------ */
   function Film(section) {
     this.section = section;
     this.name = section.getAttribute('data-film');
     this.count = parseInt(section.getAttribute('data-frames'), 10);
+    this.ext = section.getAttribute('data-ext') || 'jpg';
     this.canvas = $('.film-canvas', section);
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d', { alpha: false });
     this.host = this.canvas.parentElement;
-    this.frames = [];
+    this.useImages = location.protocol === 'file:' || typeof createImageBitmap !== 'function';
+    this.blobs = [];
+    this.images = [];
+    this.bitmaps = {};
+    this.pending = {};
+    this.decoding = 0;
+    this.k1lo = this.k1hi = this.k2lo = this.k2hi = 0;
     this.current = 0;
     this.target = 0;
-    this.drawn = -1;
+    this.drawnPos = -1;
+    this.shown = -1;
     this.started = false;
     this.ready = false;
     this.variant = null;
@@ -51,91 +66,189 @@
     return (vw < 760 && vh > vw) ? 'mobile' : 'desktop';
   };
   Film.prototype.src = function (i) {
-    return 'assets/film/' + this.name + '/' + this.variant + '/f' + pad3(i + 1) + '.jpg';
+    return 'assets/film/' + this.name + '/' + this.variant + '/f' + pad3(i + 1) + '.' + this.ext;
   };
   Film.prototype.load = function (onProgress, onFirstPass) {
     if (this.started) return;
     this.started = true;
     this.variant = this.pickVariant();
-    this.frames = new Array(this.count);
+    this.release();
+    this.blobs = new Array(this.count);
+    this.images = new Array(this.count);
     var self = this;
+    var count = this.count;
+    var queued = new Array(count);
     var order = [];
     var seen = {};
-    [16, 8, 4, 2, 1].forEach(function (step, pass) {
-      for (var i = 0; i < self.count; i += step) {
+    [12, 6, 3, 1].forEach(function (step, pass) {
+      for (var i = 0; i < count; i += step) {
         if (!seen[i]) { seen[i] = 1; order.push(i); }
       }
       if (pass === 0) {
-        if (!seen[self.count - 1]) { seen[self.count - 1] = 1; order.push(self.count - 1); }
+        if (!seen[count - 1]) { seen[count - 1] = 1; order.push(count - 1); }
         self.firstPass = order.length;
       }
     });
     var inflight = 0;
     var cursor = 0;
+    var done = 0;
     var firstDone = false;
     var batch = this.variant;
+
+    function nextIndex() {
+      if (done >= self.firstPass) {
+        var at = Math.round(self.target * (count - 1));
+        for (var d = 0; d <= 8; d++) {
+          if (at + d < count && !queued[at + d]) return at + d;
+          if (at - d >= 0 && !queued[at - d]) return at - d;
+        }
+      }
+      while (cursor < order.length && queued[order[cursor]]) cursor++;
+      return cursor < order.length ? order[cursor++] : -1;
+    }
+    function settle(i, data) {
+      inflight--;
+      if (batch !== self.variant) return;
+      if (data) {
+        if (self.useImages) self.images[i] = data; else self.blobs[i] = data;
+      }
+      done++;
+      self.loadedCount = done;
+      if (onProgress) onProgress(Math.min(1, done / self.firstPass));
+      if (!firstDone && done >= self.firstPass) {
+        firstDone = true;
+        if (onFirstPass) onFirstPass();
+      }
+      self.drawnPos = -1;
+      pump();
+    }
     function pump() {
-      while (inflight < 6 && cursor < order.length) {
+      while (inflight < 6) {
+        var next = nextIndex();
+        if (next < 0) return;
+        queued[next] = true;
+        inflight++;
         (function (i) {
-          var img = new Image();
-          img.decoding = 'async';
-          inflight++;
-          img.onload = img.onerror = function (e) {
-            inflight--;
-            if (batch !== self.variant) return;
-            if (e.type === 'load') self.frames[i] = img;
-            self.loadedCount++;
-            if (onProgress) onProgress(Math.min(1, self.loadedCount / self.firstPass));
-            if (!firstDone && self.loadedCount >= self.firstPass) {
-              firstDone = true;
-              if (onFirstPass) onFirstPass();
-            }
-            self.drawn = -1;
-            pump();
-          };
-          img.src = self.src(i);
-        })(order[cursor++]);
+          if (self.useImages) {
+            var img = new Image();
+            img.decoding = 'async';
+            img.onload = function () { settle(i, img); };
+            img.onerror = function () { settle(i, null); };
+            img.src = self.src(i);
+          } else {
+            fetch(self.src(i))
+              .then(function (r) { return r.ok ? r.blob() : null; })
+              .then(function (b) { settle(i, b); }, function () { settle(i, null); });
+          }
+        })(next);
       }
     }
     pump();
   };
+  Film.prototype.keep = function (i) {
+    return (i >= this.k1lo && i <= this.k1hi) || (i >= this.k2lo && i <= this.k2hi);
+  };
+  // Decode the frames around the playhead (biased toward the scroll direction) and free the rest
+  Film.prototype.prefetch = function () {
+    if (this.useImages || !this.started) return;
+    var last = this.count - 1;
+    var cur = Math.round(this.current * last);
+    var at = Math.round(this.target * last);
+    var dir = at >= cur ? 1 : -1;
+    this.k1lo = Math.max(0, cur - (dir > 0 ? 4 : 12));
+    this.k1hi = Math.min(last, cur + (dir > 0 ? 12 : 4));
+    this.k2lo = Math.max(0, at - 4);
+    this.k2hi = Math.min(last, at + 4);
+    for (var k in this.bitmaps) {
+      if (!this.keep(+k)) { this.bitmaps[k].close(); delete this.bitmaps[k]; }
+    }
+    for (var d = 0; d <= 12 && this.decoding < 3; d++) {
+      this.decode(cur + d * dir);
+      if (d) this.decode(cur - d * dir);
+      this.decode(at + d);
+      if (d) this.decode(at - d);
+    }
+  };
+  Film.prototype.decode = function (i) {
+    if (this.decoding >= 3 || i < 0 || i >= this.count || !this.keep(i)) return;
+    if (this.bitmaps[i] || this.pending[i] || !this.blobs[i]) return;
+    var self = this;
+    var batch = this.variant;
+    this.pending[i] = true;
+    this.decoding++;
+    createImageBitmap(this.blobs[i]).then(function (bm) {
+      self.decoding--;
+      delete self.pending[i];
+      if (batch !== self.variant || !self.keep(i)) { bm.close(); return; }
+      self.bitmaps[i] = bm;
+      self.drawnPos = -1;
+    }, function () {
+      self.decoding--;
+      delete self.pending[i];
+    });
+  };
+  // Free every decoded frame (used when the film is far off screen)
+  Film.prototype.release = function () {
+    for (var k in this.bitmaps) { this.bitmaps[k].close(); }
+    this.bitmaps = {};
+  };
   Film.prototype.resize = function () {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var w = this.canvas.clientWidth;
     var h = this.canvas.clientHeight;
     var scale = Math.min(dpr, 1920 / Math.max(w, 1));
     this.canvas.width = Math.max(1, Math.round(w * scale));
     this.canvas.height = Math.max(1, Math.round(h * scale));
-    this.drawn = -1;
+    this.ctx.imageSmoothingEnabled = true;
+    this.ctx.imageSmoothingQuality = 'high';
+    this.drawnPos = -1;
     if (this.started && this.pickVariant() !== this.variant) {
       this.started = false;
       this.loadedCount = 0;
       this.load();
     }
   };
+  Film.prototype.frame = function (i) {
+    return this.useImages ? this.images[i] : this.bitmaps[i];
+  };
   Film.prototype.nearest = function (i) {
-    if (this.frames[i]) return i;
+    if (this.frame(i)) return i;
     for (var d = 1; d < this.count; d++) {
-      if (i - d >= 0 && this.frames[i - d]) return i - d;
-      if (i + d < this.count && this.frames[i + d]) return i + d;
+      if (i - d >= 0 && this.frame(i - d)) return i - d;
+      if (i + d < this.count && this.frame(i + d)) return i + d;
     }
     return -1;
   };
+  Film.prototype.blit = function (img, alpha) {
+    var c = this.canvas;
+    var iw = img.naturalWidth || img.width;
+    var ih = img.naturalHeight || img.height;
+    var s = Math.max(c.width / iw, c.height / ih);
+    this.ctx.globalAlpha = alpha;
+    this.ctx.drawImage(img, (c.width - iw * s) / 2, (c.height - ih * s) / 2, iw * s, ih * s);
+  };
+  // Returns the frame index on screen (rounded), or -1 if nothing is ready yet
   Film.prototype.render = function () {
-    var want = Math.round(this.current * (this.count - 1));
-    var n = this.nearest(want);
-    if (n < 0) return -1;
-    if (n !== this.drawn) {
-      var img = this.frames[n];
-      var c = this.canvas;
-      var s = Math.max(c.width / img.naturalWidth, c.height / img.naturalHeight);
-      var w = img.naturalWidth * s;
-      var h = img.naturalHeight * s;
-      this.ctx.drawImage(img, (c.width - w) / 2, (c.height - h) / 2, w, h);
-      this.drawn = n;
-      if (!this.ready) { this.ready = true; this.host.classList.add('film-ready'); }
+    var pos = this.current * (this.count - 1);
+    if (this.drawnPos >= 0 && Math.abs(pos - this.drawnPos) < 0.01) return this.shown;
+    var a = Math.floor(pos);
+    var b = Math.min(this.count - 1, a + 1);
+    var f = pos - a;
+    var fa = this.frame(a);
+    var fb = this.frame(b);
+    if (fa && fb && f > 0.01) {
+      this.blit(fa, 1);
+      this.blit(fb, f);
+    } else {
+      var n = this.nearest(f > 0.5 ? b : a);
+      if (n < 0) return -1;
+      this.blit(this.frame(n), 1);
     }
-    return n;
+    this.ctx.globalAlpha = 1;
+    this.drawnPos = pos;
+    this.shown = Math.round(pos);
+    if (!this.ready) { this.ready = true; this.host.classList.add('film-ready'); }
+    return this.shown;
   };
 
   /* ------------------------------------------------------------------
@@ -745,7 +858,15 @@
   function rectOf(el) { var r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, left: r.left, width: r.width, height: r.height }; }
   function onScreen(r) { return r.top < vh && r.bottom > 0; }
 
+  var lastT = 0;
+  var lastFrameNo = -1;
+
   function tick(t) {
+    // Time-based easing: the films glide the same on 60 Hz and 120 Hz screens
+    var dt = lastT ? Math.min(t - lastT, 100) : 16.7;
+    lastT = t;
+    var filmEase = 1 - Math.exp(-dt / 110);
+
     /* ---- read phase: every layout read happens before any write ---- */
     scrollY = window.scrollY;
     velocity = lerp(velocity, scrollY - lastScrollY, 0.2);
@@ -780,10 +901,11 @@
     var heroP = clamp((scrollY - L.heroTop) / Math.max(1, L.heroH - vh), 0, 1);
     if (scrollY < L.heroTop + L.heroH && !reduce) {
       heroFilm.target = heroP;
-      heroFilm.current = lerp(heroFilm.current, heroFilm.target, 0.14);
-      if (Math.abs(heroFilm.current - heroFilm.target) < 0.0005) heroFilm.current = heroFilm.target;
+      heroFilm.current = lerp(heroFilm.current, heroFilm.target, filmEase);
+      if (Math.abs(heroFilm.current - heroFilm.target) < 0.00005) heroFilm.current = heroFilm.target;
+      heroFilm.prefetch();
       var n = heroFilm.render();
-      if (n > -1 && n !== heroFilm.shownNo) { heroFilm.shownNo = n; frameNo.textContent = pad3(n + 1); }
+      if (n > -1 && n !== lastFrameNo) { lastFrameNo = n; frameNo.textContent = pad3(n + 1); }
       var cp = heroFilm.current;
       var fade = 0.045;
       chapters.forEach(function (ch) {
@@ -876,11 +998,16 @@
 
     // Contact horizon film
     if (!reduce && cR.top < vh * 2.2 && !contactFilm.started) contactFilm.load();
-    if (!reduce && onScreen(cR)) {
+    if (!reduce && cR.top < vh * 1.5 && cR.bottom > -vh * 0.5) {
       contactFilm.target = clamp((vh - cR.top) / cR.height, 0, 1);
-      contactFilm.current = lerp(contactFilm.current, contactFilm.target, 0.12);
-      contactFilm.render();
+      contactFilm.current = lerp(contactFilm.current, contactFilm.target, filmEase);
+      contactFilm.prefetch();
+      if (onScreen(cR)) contactFilm.render();
+    } else if (cR.top > vh * 3 || cR.bottom < -vh * 2) {
+      contactFilm.release();
     }
+    // Free the opening film's decoded frames once it is well out of view
+    if (scrollY > L.heroTop + L.heroH + vh) heroFilm.release();
 
     // Cursor ring easing
     if (finePointer && !reduce) {
